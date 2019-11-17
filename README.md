@@ -1,2 +1,2 @@
 # qrfind
-Verifiacar si existe un wr
+Verifiacar si existe un qr en una imagen
