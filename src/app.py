@@ -24,7 +24,7 @@ def hello():
 
 
 @app.route('/qrread')
-def qrtest():
+def qrread():
 
     t = functions.decode_img("localhost:5000/qrtest")
     """Return a friendly HTTP greeting."""

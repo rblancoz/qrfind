@@ -45,45 +45,54 @@ def decode_img(img_path):
     print(img_path)
 
     # Variante 1
+    try:
 
-    im_cv2_1 = cv2.imread(img_path)
+        im_cv2_1 = cv2.imread(img_path)
 
-    decodedObjects1 = decode(im_cv2_1)
+        decodedObjects1 = decode(im_cv2_1)
 
-    print("Variante 1")
-    print(decodedObjects1)
+        print("Variante 1")
+        print(decodedObjects1)
 
+    except Exception as identifier:
+        print(identifier)
     # Variante 2
 
-    f = open(img_path, "rb")
-    img_arr2 = np.asarray(bytearray(f.read()), dtype=np.uint8)
-    f.close()
+    try:
+        f = open(img_path, "rb")
+        img_arr2 = np.asarray(bytearray(f.read()), dtype=np.uint8)
+        f.close()
 
-    im_cv2_2 = cv2.imdecode(img_arr2, 0)
-    decodedObjects2 = decode(im_cv2_2)
+        im_cv2_2 = cv2.imdecode(img_arr2, 0)
+        decodedObjects2 = decode(im_cv2_2)
 
-    print("Variante 2")
-    print(decodedObjects2)
+        print("Variante 2")
+        print(decodedObjects2)
+    except Exception as identifier:
+        print(identifier)
 
     # Variante 3
 
-    f3 = open(img_path, "rb")
-    img_base64 = base64.b64encode(f3.read())
-    f3.close()
+    try:
+        f3 = open(img_path, "rb")
+        img_base64 = base64.b64encode(f3.read())
+        f3.close()
 
-    decoded_file = base64.b64decode(img_base64)
-    img_arr3 = np.asarray(bytearray(decoded_file), dtype=np.uint8)
+        decoded_file = base64.b64decode(img_base64)
+        img_arr3 = np.asarray(bytearray(decoded_file), dtype=np.uint8)
 
-    im_cv2_3 = cv2.imdecode(img_arr3, 0)
-    result = "--"
+        im_cv2_3 = cv2.imdecode(img_arr3, 0)
+        result = "--"
 
-    if im_cv2_3 is not None:
-        decodedObjects3 = decode(im_cv2_3)
+        if im_cv2_3 is not None:
+            decodedObjects3 = decode(im_cv2_3)
 
-        print("Variante 3")
-        print(decodedObjects3)
-        result = decodedObjects3[0].data
-    else:
-        print("Variante 3 Error")
+            print("Variante 3")
+            print(decodedObjects3)
+            result = decodedObjects3[0].data
+        else:
+            print("Variante 3 Error")
+    except Exception as identifier:
+        print(identifier)
 
     return result
