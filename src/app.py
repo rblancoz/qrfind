@@ -23,6 +23,15 @@ def hello():
     return message
 
 
+@app.route('/qrread')
+def qrtest():
+
+    t = functions.decode_img("localhost:5000/qrtest")
+    """Return a friendly HTTP greeting."""
+    message = "Hello World"
+    return message
+
+
 @app.route('/qrtest')
 def qrtest():
     dir_path = os.path.dirname(os.path.realpath(__file__))
