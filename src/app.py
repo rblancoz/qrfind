@@ -11,6 +11,7 @@ from flask import jsonify, request
 import functions
 import base64
 from flask.helpers import make_response, send_file
+import io
 # pylint: disable=C0103
 app = Flask(__name__)
 
@@ -25,16 +26,16 @@ def hello():
 @app.route('/qrtest')
 def qrtest():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    img_path = dir_path + '/barcode_img/label.png'
+    img_path = dir_path + '/qrtest.jpg'
     f3 = open(img_path, "rb")
     img_base64 = base64.b64encode(f3.read())
     f3.close()
 
-    # byte_io = io.BytesIO()
-    # byte_io.write(img)
-    # byte_io.seek(0)
+    byte_io = io.BytesIO()
+    byte_io.write(img_base64)
+    byte_io.seek(0)
 
-    response = make_response(send_file(img_base64, mimetype='image/jpg'))
+    response = make_response(send_file(byte_io, mimetype='image/jpg'))
     response.headers['Content-Transfer-Encoding'] = 'base64'
     return response
 
