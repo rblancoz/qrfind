@@ -23,7 +23,7 @@ def hello():
 
 
 @app.route('/qrtest')
-def hello():
+def qrtest():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     img_path = dir_path + '/barcode_img/label.png'
     f3 = open(img_path, "rb")
