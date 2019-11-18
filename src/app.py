@@ -40,7 +40,6 @@ def hello():
 
 
 @app.route("/barcode/read", methods=['POST'])
-@authorize
 def barcode_img_base64():
     # print(request.data)
     data = request.get_json()
