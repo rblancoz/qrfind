@@ -9,6 +9,8 @@ from flask import Blueprint
 from flask import jsonify, request
 
 import functions
+import base64
+from flask.helpers import make_response, send_file
 # pylint: disable=C0103
 app = Flask(__name__)
 
@@ -18,6 +20,23 @@ def hello():
     """Return a friendly HTTP greeting."""
     message = "Hello World"
     return message
+
+
+@app.route('/qrtest')
+def hello():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    img_path = dir_path + '/barcode_img/label.png'
+    f3 = open(img_path, "rb")
+    img_base64 = base64.b64encode(f3.read())
+    f3.close()
+
+    # byte_io = io.BytesIO()
+    # byte_io.write(img)
+    # byte_io.seek(0)
+
+    response = make_response(send_file(img_base64, mimetype='image/jpg'))
+    response.headers['Content-Transfer-Encoding'] = 'base64'
+    return response
 
 
 @app.route("/barcode/read", methods=['POST'])
