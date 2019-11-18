@@ -28,7 +28,7 @@ def qrtest():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     img_path = dir_path + '/qrtest.jpg'
     f3 = open(img_path, "rb")
-    img_base64 = base64.b64encode(f3.read())
+    img_base64 = f3.read()
     f3.close()
 
     byte_io = io.BytesIO()
