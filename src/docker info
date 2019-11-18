@@ -1,0 +1,64 @@
+FROM ubuntu:16.04
+
+# Env
+ENV HOME /root
+ENV WORK_DIR /root/node
+
+# Set WORKDIR
+WORKDIR ${WORK_DIR}
+
+# Set Volume
+VOLUME ${WORK_DIR}
+
+# Update ubuntu
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y wget
+RUN apt-get install -y unzip
+RUN apt-get install -y vim
+RUN apt-get install -y git
+RUN apt-get install -y build-essential cmake
+RUN apt-get autoremove -y
+RUN apt-get autoclean -y
+RUN apt-get clean -y
+
+# Install Image libs
+RUN apt-get install -y zlib1g-dev libjpeg-dev libwebp-dev libpng-dev libtiff5-dev libjasper-dev libopenexr-dev libgdal-dev
+
+# Install Python
+RUN apt-get install -y python-dev python-tk python-numpy python3-dev python3-tk python3-numpy
+
+# Install ZBar
+RUN apt-get install zbar-tools -y
+RUN apt-get install libzbar-dev -y
+RUN apt-get install python-pip -y
+
+# Download and install wkhtmltopdf
+# RUN apt-get install -y build-essential xorg libssl-dev libxrender-dev wget gdebi
+RUN apt-get -y install gdebi
+
+#RUN pip install —-upgrade pip
+RUN pip install pypng
+RUN pip install zbar
+RUN pip install pillow
+RUN pip install qrtools
+
+RUN apt-get update -y && \  
+    apt-get install -y python3-pip python3-dev
+
+COPY ./requirements.txt /requirements.txt
+COPY ./wkhtmltox_0.12.5-1.xenial_amd64.deb /wkhtmltox_0.12.5-1.xenial_amd64.deb
+
+WORKDIR /
+
+RUN gdebi --n wkhtmltox_0.12.5-1.xenial_amd64.deb
+RUN pip3 install -r requirements.txt
+
+COPY . /
+
+# EXPOSE 5000
+
+#ENTRYPOINT [ "python3" ]
+ENTRYPOINT ["python3", "-m", "ptvsd", "--port", "3000", "--host", "0.0.0.0", "app.py"]
+
+#CMD [ "app.py" ]
