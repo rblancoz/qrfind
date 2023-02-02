@@ -3,5 +3,5 @@ imgkit
 opencv-python==4.1.0.25
 numpy
 pyzbar==0.1.8
-werkzeug==0.15.4
+werkzeug==0.15.5
 ptvsd
